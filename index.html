@@ -81,6 +81,7 @@ body{
   font-weight:400;margin-bottom:1.75rem;
 }
 .head .script{font-size:2.9rem;line-height:.9;display:inline-block}
+.head.one-line .script{font-size:3.1rem;line-height:1.05}
 .rule{
   width:2.5rem;height:1px;background:var(--rose);opacity:.5;
   margin:0 auto 1.6rem;
@@ -91,6 +92,8 @@ body{
   font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
 }
 .foot b{color:var(--rose);font-weight:500}
+.foot .pip{display:flex;align-items:center}
+.foot .pip svg{width:.9rem;height:.9rem;fill:var(--blush);display:block}
 
 /* ---------------- page one: photos ---------------- */
 .gallery{display:flex;flex-direction:column;gap:1.5rem}
@@ -134,27 +137,23 @@ body{
 }
 
 /* ---------------- page three: the interactive bit ---------------- */
-.hearts{display:flex;justify-content:center;align-items:flex-start;gap:.9rem;margin-bottom:.6rem}
+.hearts{display:flex;justify-content:center;align-items:center;gap:1.6rem;margin-bottom:1.7rem}
 .heart{
-  background:none;border:none;padding:.3rem;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:.4rem;width:5.5rem;
+  background:none;border:none;padding:.5rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
   animation:bob 3.4s ease-in-out infinite;
 }
 .heart:nth-child(2){animation-duration:4.1s;animation-delay:-1.2s}
 .heart:nth-child(3){animation-duration:3.7s;animation-delay:-2.4s}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.heart svg{width:44px;height:44px;display:block;transition:transform .2s ease}
+.heart svg{width:50px;height:50px;display:block;transition:transform .2s ease}
 .heart svg path{fill:var(--card);stroke:var(--rose);stroke-width:2.4;transition:fill .25s ease}
 .heart:active svg{transform:scale(.9)}
 .heart:focus-visible{outline:2px solid var(--rose);outline-offset:4px;border-radius:10px}
 .heart.playing svg path{fill:var(--blush)}
 .heart.playing svg{animation:beat .85s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)}30%{transform:scale(1.12)}60%{transform:scale(1.02)}}
-.heart .cap{
-  font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--ink-soft);line-height:1.4;
-}
-.heart.playing .cap{color:var(--rose)}
+.heart.broken svg path{stroke:var(--ink-soft);opacity:.5}
 .hint{
   text-align:center;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
   color:var(--ink-soft);margin-bottom:1.9rem;
@@ -175,6 +174,103 @@ button.msg.sent{background:var(--rose);color:var(--card);border-color:var(--rose
 button.msg.failed{color:var(--ink-soft);border-color:var(--ink-soft);font-style:italic}
 button.msg:disabled{cursor:default}
 
+/* ---------------- polaroid video carousel ---------------- */
+.polaroids{
+  display:flex;gap:1rem;overflow-x:auto;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+  padding:.6rem .25rem 1.1rem;margin:0 -.5rem;
+  scrollbar-width:none;
+}
+.polaroids::-webkit-scrollbar{display:none}
+.polaroid{
+  flex:0 0 80%;scroll-snap-align:center;
+  background:var(--card);padding:.65rem .65rem 0;
+  box-shadow:0 10px 26px rgba(0,0,0,.2);
+  border:1px solid rgba(58,37,41,.07);
+}
+.polaroid:nth-child(odd){transform:rotate(-1.3deg)}
+.polaroid:nth-child(even){transform:rotate(1.3deg)}
+.shot{
+  position:relative;aspect-ratio:1/1;overflow:hidden;
+  background:#1B1013;cursor:pointer;
+}
+.shot video{width:100%;height:100%;object-fit:cover;display:block}
+.shot .veil{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(27,16,19,.32);transition:opacity .35s ease;
+}
+.shot.playing .veil{opacity:0;pointer-events:none}
+.shot .veil svg{width:3rem;height:3rem;fill:var(--card);opacity:.94;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4))}
+.shot .oops{
+  position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+  background:#1B1013;color:var(--blush);font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;text-align:center;padding:1rem;
+}
+.shot.broken .oops{display:flex}
+.polaroid .cap-p{
+  font-family:"Pinyon Script",cursive;color:var(--rose);
+  text-align:center;font-size:1.45rem;line-height:1.1;
+  padding:.9rem .4rem 1.15rem;
+}
+.dots{display:flex;justify-content:center;gap:.4rem;margin-bottom:.5rem}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(168,21,43,.24);transition:background .3s ease}
+.dot.on{background:var(--rose)}
+
+/* ---------------- write to each other ---------------- */
+.from-him{
+  margin:1.6rem 0 1.4rem;padding:.15rem 0 .15rem .95rem;
+  border-left:2px solid var(--rose);display:none;
+}
+.from-him.show{display:block}
+.from-him .lbl{
+  font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:.4rem;
+}
+.from-him .body{font-size:1.05rem;line-height:1.55;font-style:italic;color:var(--ink)}
+.from-him .when{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:.45rem}
+
+.write{margin-top:1.5rem}
+.write .lbl{
+  font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:.5rem;
+}
+.write textarea{
+  width:100%;min-height:5.5rem;resize:vertical;
+  background:#FFFCFB;color:var(--ink);
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:1.05rem;line-height:1.55;
+  border:1px solid rgba(168,21,43,.28);border-radius:0;padding:.85rem;
+}
+.write textarea::placeholder{color:var(--ink-soft);font-style:italic;opacity:.75}
+.write textarea:focus{outline:none;border-color:var(--rose)}
+.write .row{display:flex;justify-content:space-between;align-items:center;margin-top:.45rem}
+.write .count{font-size:.6rem;letter-spacing:.14em;color:var(--ink-soft)}
+.write button{
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:1rem;letter-spacing:.02em;
+  color:var(--rose);background:transparent;border:1px solid rgba(168,21,43,.35);
+  padding:.55rem 1.4rem;cursor:pointer;
+  transition:background .25s ease,color .25s ease,border-color .25s ease,opacity .2s ease;
+}
+.write button:hover:not(:disabled){border-color:var(--rose)}
+.write button:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.write button:disabled{opacity:.4;cursor:default}
+.write button.sent{background:var(--rose);color:var(--card);border-color:var(--rose);font-style:italic;opacity:1}
+
+/* ---------------- pink bows & hearts on the red ---------------- */
+#confetti{
+  position:absolute;top:0;left:0;width:100%;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+#confetti svg{
+  position:absolute;fill:var(--blush);
+  animation:sway 9s ease-in-out infinite;
+  will-change:transform;
+}
+#confetti svg .tail{fill:none;stroke:var(--blush);stroke-width:1.6;stroke-linecap:round}
+@keyframes sway{
+  0%,100%{transform:translateY(0) rotate(var(--r))}
+  50%{transform:translateY(-14px) rotate(calc(var(--r) + 6deg))}
+}
+
 @media (prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important}
   .flap{transform:rotateX(-178deg)}
@@ -185,21 +281,23 @@ button.msg:disabled{cursor:default}
 </head>
 <body>
 
+<div id="confetti" aria-hidden="true"></div>
+
 <!-- ============ ENVELOPE ONE — PHOTOS ============ -->
 <section class="envelope" id="one">
   <div class="paper-body">
     <svg class="star a" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.9 8.4L24 12l-9.1 3.6L12 24l-2.9-8.4L0 12l9.1-3.6z"/></svg>
     <svg class="star b" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.9 8.4L24 12l-9.1 3.6L12 24l-2.9-8.4L0 12l9.1-3.6z"/></svg>
     <span class="corner l">i</span>
-    <span class="corner r">us</span>
+    <span class="corner r">My love</span>
     <div class="flap"></div>
     <div class="seal">C+J</div>
 
     <div class="contents">
-      <h1 class="head"><span class="script">Happy Birthday</span><br>my sweet girl</h1>
+      <h1 class="head one-line"><span class="script">To my sweet girl&hellip;</span></h1>
       <div class="rule"></div>
       <div class="gallery" id="gallery"></div>
-      <div class="foot"><span>page <b>1</b> of 3</span><span>keep scrolling</span></div>
+      <div class="foot"><span class="pip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.9-9.6-9.2C.6 8.1 2.4 4.3 6 3.4c2.3-.6 4.6.5 6 2.5 1.4-2 3.7-3.1 6-2.5 3.6.9 5.4 4.7 3.6 8.4C19.5 16.1 12 21 12 21z"/></svg></span><span>BELLO!</span></div>
     </div>
   </div>
 </section>
@@ -208,7 +306,7 @@ button.msg:disabled{cursor:default}
 <section class="envelope" id="two">
   <div class="paper-body">
     <span class="corner l">ii</span>
-    <span class="corner r">a letter</span>
+    <span class="corner r">My cookaracha</span>
     <div class="flap"></div>
     <div class="seal">C+J</div>
 
@@ -228,28 +326,63 @@ button.msg:disabled{cursor:default}
         <p class="sign">— C</p>
         <!-- ========================================================= -->
       </div>
-      <div class="foot"><span>page <b>2</b> of 3</span><span>one more</span></div>
+      <div class="foot"><span class="pip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.9-9.6-9.2C.6 8.1 2.4 4.3 6 3.4c2.3-.6 4.6.5 6 2.5 1.4-2 3.7-3.1 6-2.5 3.6.9 5.4 4.7 3.6 8.4C19.5 16.1 12 21 12 21z"/></svg></span><span>BELLO!</span></div>
     </div>
   </div>
 </section>
 
-<!-- ============ ENVELOPE THREE — HEARTS & BUTTONS ============ -->
+<!-- ============ ENVELOPE THREE — VIDEO POLAROIDS ============ -->
 <section class="envelope" id="three">
   <div class="paper-body">
     <span class="corner l">iii</span>
-    <span class="corner r">for you</span>
+    <span class="corner r">My soul</span>
     <div class="flap"></div>
     <div class="seal">C+J</div>
 
     <div class="contents">
-      <h2 class="head"><span class="script">Sounds</span><br>&amp; things to say</h2>
+      <h2 class="head">My happiest moments,<br><span class="script">all with you</span></h2>
+      <div class="rule"></div>
+
+      <div class="polaroids" id="polaroids"></div>
+      <div class="dots" id="dots"></div>
+      <p class="hint">tap or swipe</p>
+
+      <div class="foot"><span class="pip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.9-9.6-9.2C.6 8.1 2.4 4.3 6 3.4c2.3-.6 4.6.5 6 2.5 1.4-2 3.7-3.1 6-2.5 3.6.9 5.4 4.7 3.6 8.4C19.5 16.1 12 21 12 21z"/></svg></span><span>BELLO!</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENVELOPE FOUR — HEARTS &amp; BUTTONS ============ -->
+<section class="envelope" id="four">
+  <div class="paper-body">
+    <span class="corner l">iv</span>
+    <span class="corner r">My baddie</span>
+    <div class="flap"></div>
+    <div class="seal">C+J</div>
+
+    <div class="contents">
+      <h2 class="head"><span class="script">I adore you</span></h2>
       <div class="rule"></div>
 
       <div class="hearts" id="hearts"></div>
-      <p class="hint">tap a heart</p>
 
       <div class="buttons" id="buttons"></div>
-      <div class="foot"><span>page <b>3</b> of 3</span><span>press one, I'll know</span></div>
+
+      <div class="from-him" id="fromHim">
+        <p class="lbl">a note from me</p>
+        <p class="body" id="fromHimBody"></p>
+        <p class="when" id="fromHimWhen"></p>
+      </div>
+
+      <div class="write">
+        <p class="lbl">response</p>
+        <textarea id="noteInput" maxlength="400" placeholder="type anything"></textarea>
+        <div class="row">
+          <span class="count" id="noteCount">0 / 400</span>
+          <button id="noteSend" disabled>Send it</button>
+        </div>
+      </div>
+      <div class="foot"><span class="pip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.9-9.6-9.2C.6 8.1 2.4 4.3 6 3.4c2.3-.6 4.6.5 6 2.5 1.4-2 3.7-3.1 6-2.5 3.6.9 5.4 4.7 3.6 8.4C19.5 16.1 12 21 12 21z"/></svg></span><span>BELLO!</span></div>
     </div>
   </div>
 </section>
@@ -259,21 +392,42 @@ button.msg:disabled{cursor:default}
    1. NTFY TOPIC
    ============================================================ */
 const NTFY_TOPIC = "il0vemybeautiful_jordy_k7x2qm";
+
+/* Notes you send HER show up on page four. Subscribe to this second
+   topic in your ntfy app too, then publish to it whenever you want
+   to leave her something. Latest message wins. */
+const NTFY_TOPIC_TO_HER = "il0vemybeautiful_jordy_notes_k7x2qm";
 const PING_ON_PLAY = true;   /* notify you when she plays a recording */
 
 /* ============================================================
    2. PHOTOS — page one. Put files in an "img" folder.
       cap = the little red tag on the photo. Leave "" for none.
+
+      >>> THESE ARE PLACEHOLDERS so you can see the layout.
+      >>> Replace every src with your own, e.g. "img/1.jpg".
    ============================================================ */
 const PHOTOS = [
-  { src:"img/1.jpg", cap:"my pretty girl" },
-  { src:"img/2.jpg", cap:"" },
-  { src:"img/3.jpg", cap:"still my favorite" },
-  { src:"img/4.jpg", cap:"" }
+  { src:"https://picsum.photos/seed/pinewood/900/1150",  cap:"my pretty girl" },
+  { src:"https://picsum.photos/seed/coastline/900/700",  cap:"" },
+  { src:"https://picsum.photos/seed/wildflower/900/900", cap:"still my favorite" },
+  { src:"https://picsum.photos/seed/canyonlight/900/800", cap:"" }
 ];
 
 /* ============================================================
-   3. RECORDINGS — page three. Put files in an "audio" folder.
+   3. VIDEOS — page three. Put files in a "video" folder.
+      poster = a still frame shown before she taps. Optional,
+      but it looks far better than a black square.
+      cap = the handwriting under the polaroid.
+   ============================================================ */
+const VIDEOS = [
+  { src:"video/1.mp4", poster:"video/1.jpg", cap:"the first trip" },
+  { src:"video/2.mp4", poster:"video/2.jpg", cap:"you, laughing" },
+  { src:"video/3.mp4", poster:"video/3.jpg", cap:"that night" },
+  { src:"video/4.mp4", poster:"video/4.jpg", cap:"us" }
+];
+
+/* ============================================================
+   4. RECORDINGS — page four. Put files in an "audio" folder.
    ============================================================ */
 const TRACKS = [
   { src:"audio/song.m4a",     cap:"the song"     },
@@ -282,7 +436,7 @@ const TRACKS = [
 ];
 
 /* ============================================================
-   4. BUTTONS — page three
+   5. BUTTONS — page four
    ============================================================ */
 const BUTTONS = [
   { label:"I miss you",         alert:"Jordy misses you.",            sent:"he knows",         tag:"pensive" },
@@ -291,6 +445,54 @@ const BUTTONS = [
   { label:"I want a kiss",      alert:"Jordy wants a kiss.",          sent:"come get it",      tag:"kiss" },
   { label:"Come home",          alert:"Jordy wants you home.",        sent:"on his way",       tag:"house" }
 ];
+
+/* ============================================================
+   SCATTERED BOWS & HEARTS
+   Turn the dial up or down here. 0 removes them entirely.
+   ============================================================ */
+const CONFETTI_COUNT = 26;
+
+const BOW_SVG =
+  '<path d="M12 10.4C8.4 4.6 2.6 5 2.2 8.8c-.3 3.2 5.4 3.8 9.8 1.6z"/>' +
+  '<path d="M12 10.4c3.6-5.8 9.4-5.4 9.8-1.6.3 3.2-5.4 3.8-9.8 1.6z"/>' +
+  '<ellipse cx="12" cy="10.8" rx="1.9" ry="1.7"/>' +
+  '<path class="tail" d="M10.9 12.2C9.2 15.6 8.4 18.6 8.1 21.4"/>' +
+  '<path class="tail" d="M13.1 12.2c1.7 3.4 2.5 6.4 2.8 9.2"/>';
+
+const HEART_SVG =
+  '<path d="M12 21s-7.5-4.9-9.6-9.2C.6 8.1 2.4 4.3 6 3.4c2.3-.6 4.6.5 6 2.5 1.4-2 3.7-3.1 6-2.5 3.6.9 5.4 4.7 3.6 8.4C19.5 16.1 12 21 12 21z"/>';
+
+function scatter(){
+  const box = document.getElementById("confetti");
+  if (!box) return;
+  box.innerHTML = "";
+  const h = document.documentElement.scrollHeight;
+  box.style.height = h + "px";
+
+  for (let i = 0; i < CONFETTI_COUNT; i++){
+    const isBow = i % 3 !== 0;                    // roughly two bows per heart
+    const el = document.createElementNS("http://www.w3.org/2000/svg","svg");
+    el.setAttribute("viewBox","0 0 24 24");
+    el.innerHTML = isBow ? BOW_SVG : HEART_SVG;
+
+    const size = 16 + Math.random() * 26;
+    // push toward the edges so they frame the paper instead of hiding behind it
+    const edge = Math.random() < .5 ? Math.random() * 26 : 74 + Math.random() * 26;
+    el.style.width  = size + "px";
+    el.style.height = size + "px";
+    el.style.left   = edge + "%";
+    el.style.top    = (Math.random() * (h - 60)) + "px";
+    el.style.opacity = (0.16 + Math.random() * 0.26).toFixed(2);
+    el.style.setProperty("--r", (Math.random() * 50 - 25).toFixed(0) + "deg");
+    el.style.animationDuration = (7 + Math.random() * 7).toFixed(1) + "s";
+    el.style.animationDelay = (-Math.random() * 8).toFixed(1) + "s";
+    box.appendChild(el);
+  }
+}
+
+window.addEventListener("load", scatter);
+window.addEventListener("resize", () => { clearTimeout(window._sc); window._sc = setTimeout(scatter, 250); });
+setTimeout(scatter, 900);   // re-run once the envelopes have opened and the page has grown
 
 /* ---------- notification helper ---------- */
 function ping(body, tag, title){
@@ -325,7 +527,92 @@ PHOTOS.forEach(p => {
   gallery.appendChild(fig);
 });
 
-/* ---------- page three: hearts ---------- */
+/* ---------- page three: polaroid videos ---------- */
+const strip = document.getElementById("polaroids");
+const dotsWrap = document.getElementById("dots");
+let playingVid = null;
+
+VIDEOS.forEach((v, i) => {
+  const card = document.createElement("figure");
+  card.className = "polaroid";
+
+  const shot = document.createElement("div");
+  shot.className = "shot";
+
+  const vid = document.createElement("video");
+  vid.src = v.src;
+  vid.playsInline = true;
+  vid.setAttribute("playsinline","");     /* iOS: play in place, not fullscreen */
+  vid.preload = "metadata";
+  if (v.poster) vid.poster = v.poster;
+
+  shot.innerHTML =
+    '<div class="veil"><svg viewBox="0 0 24 24"><path d="M8 5.2v13.6L19 12z"/></svg></div>' +
+    '<div class="oops">this one didn\'t load</div>';
+  shot.insertBefore(vid, shot.firstChild);
+
+  vid.addEventListener("ended", () => shot.classList.remove("playing"));
+  vid.addEventListener("error", () => shot.classList.add("broken"));
+
+  shot.addEventListener("click", () => {
+    if (shot.classList.contains("broken")) return;
+    if (navigator.vibrate) navigator.vibrate(10);
+
+    if (playingVid && playingVid !== vid){          /* only one at a time */
+      playingVid.pause();
+      playingVid.closest(".shot").classList.remove("playing");
+    }
+    if (vid.paused){
+      vid.play().then(() => {
+        shot.classList.add("playing");
+        playingVid = vid;
+      }).catch(() => shot.classList.add("broken"));
+    } else {
+      vid.pause();
+      shot.classList.remove("playing");
+      playingVid = null;
+    }
+  });
+
+  const cap = document.createElement("figcaption");
+  cap.className = "cap-p";
+  cap.textContent = v.cap;
+
+  card.appendChild(shot);
+  card.appendChild(cap);
+  strip.appendChild(card);
+
+  const d = document.createElement("span");
+  d.className = "dot" + (i === 0 ? " on" : "");
+  dotsWrap.appendChild(d);
+});
+
+/* dots follow the swipe, and a video pauses when she scrolls past it */
+strip.addEventListener("scroll", () => {
+  clearTimeout(window._dotTimer);
+  window._dotTimer = setTimeout(() => {
+    const cards = [...strip.children];
+    const mid = strip.scrollLeft + strip.clientWidth / 2;
+    let closest = 0, best = Infinity;
+    cards.forEach((c, i) => {
+      const center = c.offsetLeft + c.offsetWidth / 2;
+      const dist = Math.abs(center - mid);
+      if (dist < best){ best = dist; closest = i; }
+    });
+    [...dotsWrap.children].forEach((d, i) => d.classList.toggle("on", i === closest));
+
+    if (playingVid){
+      const active = cards[closest].querySelector("video");
+      if (active !== playingVid){
+        playingVid.pause();
+        playingVid.closest(".shot").classList.remove("playing");
+        playingVid = null;
+      }
+    }
+  }, 90);
+});
+
+/* ---------- page four: hearts ---------- */
 const HEART = "M12 21s-7.5-4.9-9.6-9.2C.6 8.1 2.4 4.3 6 3.4c2.3-.6 4.6.5 6 2.5 1.4-2 3.7-3.1 6-2.5 3.6.9 5.4 4.7 3.6 8.4C19.5 16.1 12 21 12 21z";
 const heartsWrap = document.getElementById("hearts");
 let current = null;
@@ -334,8 +621,7 @@ TRACKS.forEach(t => {
   const btn = document.createElement("button");
   btn.className = "heart";
   btn.setAttribute("aria-label","Play " + t.cap);
-  btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="' + HEART + '"/></svg>' +
-                  '<span class="cap">' + t.cap + '</span>';
+  btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="' + HEART + '"/></svg>';
 
   const audio = new Audio(t.src);
   audio.preload = "none";
@@ -344,7 +630,7 @@ TRACKS.forEach(t => {
   audio.addEventListener("ended", () => btn.classList.remove("playing"));
   audio.addEventListener("error", () => {
     btn.classList.remove("playing");
-    btn.querySelector(".cap").textContent = "won't load";
+    btn.classList.add("broken");
   });
 
   btn.addEventListener("click", () => {
@@ -366,14 +652,14 @@ TRACKS.forEach(t => {
         ping("Jordy is listening to \u201C" + t.cap + "\u201D","musical_note").catch(()=>{});
       }
     }).catch(() => {
-      btn.querySelector(".cap").textContent = "won't play";
+      btn.classList.add("broken");
     });
   });
 
   heartsWrap.appendChild(btn);
 });
 
-/* ---------- page three: buttons ---------- */
+/* ---------- page four: buttons ---------- */
 const wrap = document.getElementById("buttons");
 BUTTONS.forEach(b => {
   const el = document.createElement("button");
@@ -397,6 +683,60 @@ BUTTONS.forEach(b => {
   });
   wrap.appendChild(el);
 });
+
+/* ---------- page four: her note to you ---------- */
+const noteInput = document.getElementById("noteInput");
+const noteSend  = document.getElementById("noteSend");
+const noteCount = document.getElementById("noteCount");
+
+noteInput.addEventListener("input", () => {
+  noteCount.textContent = noteInput.value.length + " / 400";
+  noteSend.disabled = noteInput.value.trim().length === 0;
+});
+
+noteSend.addEventListener("click", async () => {
+  const text = noteInput.value.trim();
+  if (!text) return;
+  noteSend.disabled = true;
+  noteSend.textContent = "sending\u2026";
+  if (navigator.vibrate) navigator.vibrate(12);
+
+  try {
+    const res = await ping(text, "love_letter", "Jordy wrote you");
+    if (!res.ok) throw new Error(res.status);
+    noteInput.value = "";
+    noteCount.textContent = "0 / 400";
+    noteSend.classList.add("sent");
+    noteSend.textContent = "he's got it";
+    setTimeout(() => {
+      noteSend.classList.remove("sent");
+      noteSend.textContent = "Send it";
+    }, 2600);
+  } catch (err) {
+    noteSend.textContent = "didn't send \u2014 try again";
+    noteSend.disabled = false;
+  }
+});
+
+/* ---------- page four: your latest note to her ---------- */
+(async function loadNote(){
+  const box  = document.getElementById("fromHim");
+  const body = document.getElementById("fromHimBody");
+  const when = document.getElementById("fromHimWhen");
+  try {
+    const res = await fetch("https://ntfy.sh/" + NTFY_TOPIC_TO_HER + "/json?poll=1");
+    if (!res.ok) return;
+    const lines = (await res.text()).trim().split("\n").filter(Boolean);
+    const msgs = lines.map(l => { try { return JSON.parse(l); } catch(e){ return null; } })
+                      .filter(m => m && m.event === "message" && m.message);
+    if (!msgs.length) return;
+    const last = msgs[msgs.length - 1];
+    body.textContent = last.message;
+    const d = new Date(last.time * 1000);
+    when.textContent = d.toLocaleDateString(undefined,{month:"long",day:"numeric"});
+    box.classList.add("show");
+  } catch (e) { /* no note today, block stays hidden */ }
+})();
 </script>
 </body>
 </html>
